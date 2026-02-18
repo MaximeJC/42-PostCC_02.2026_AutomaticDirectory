@@ -6,7 +6,7 @@ $prg_name = "CreateGroup"
 
 $argsData = @(
     [Argument]::new("Group name", $true, ""),
-    [Argument]::new("Organisation Unit", $true, "OU=TEST,DC=domolia,DC=lan"),
+    [Argument]::new("Organisation Unit", $true, "OU=TESTOU,DC=domolia,DC=lan"),
     [Argument]::new("Group scope", $true, "DomainLocal"),
     [Argument]::new("Description", $true, "")
 )
