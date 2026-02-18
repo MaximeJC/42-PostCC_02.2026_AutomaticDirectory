@@ -1,27 +1,27 @@
 using assembly System.Windows.Forms
 using assembly System.Drawing
 using module "..\Modules\Form.psm1"
+using module "..\Modules\Groups.psm1"
 
-$prg_name = "ReadGroupInformation"
+$prg_name = "ReadEveryGroupInformation"
 
 $argsData = @(
-    [Argument]::new("Group name", $true, "")
     [Argument]::new("Property name (Optionnal)", $false, "")
 )
 
 try {
     $form = [CustomForm]::new($prg_name, $argsData)
     $form.askInput()
-
-    $group = $form.getFormValue("Group name")
     $property = $form.getFormValue("Property name (Optionnal)")
 
+    
+
     if ($property.length -eq 0) {
-        Get-ADGroup -Identity $group
+        Get-ADGroup -Filter *
     }
     else {
         CheckGroupProperty($property)
-        Get-ADGroup -Identity $group | Select-Object -Property $property
+        Get-ADGroup -Filter * | Select-Object -Property $property
     }
 }
 catch {

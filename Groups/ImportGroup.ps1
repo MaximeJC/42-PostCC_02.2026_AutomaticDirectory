@@ -2,7 +2,7 @@ using assembly System.Windows.Forms
 using assembly System.Drawing
 using module "..\Modules\Form.psm1"
 
-$prg_name = "RemoveUserToGroup"
+$prg_name = "ImportGroup"
 
 $argsData = @(
     [Argument]::new("Origin group name", $true, "")
