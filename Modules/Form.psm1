@@ -1,6 +1,4 @@
-﻿Add-Type -AssemblyName System.Windows.Forms
-Add-Type -AssemblyName System.Drawing
-Add-Type -AssemblyName System.Windows.Forms
+﻿
 
 class Argument {
     [string]$Label
@@ -42,8 +40,7 @@ class LabeledTextBox : System.Windows.Forms.Panel {
 
         $this.Controls.Add($this.Label)
         $this.Controls.Add($this.TextBox)
-    }
-}
+    }}
 
 class CustomForm : System.Windows.Forms.Form {
     [System.Collections.Generic.List[LabeledTextBox]]$Fields
@@ -52,9 +49,25 @@ class CustomForm : System.Windows.Forms.Form {
     CustomForm([string]$prg_name, [Argument[]]$ArgsList) {
         $this.ArgsList = $ArgsList
         $this.Text = $prg_name
-        $this.Size = New-Object System.Drawing.Size(320, 300)
+        $this.Size = New-Object System.Drawing.Size(320, 350)
         $this.StartPosition = "CenterScreen"
         $this.Fields = [System.Collections.Generic.List[LabeledTextBox]]::new()
+
+        $buttonPanel = New-Object System.Windows.Forms.Panel
+        $buttonPanel.Height = 60
+        $buttonPanel.Dock = 'Bottom'
+
+        $okButton = New-Object System.Windows.Forms.Button
+        $okButton.Size = New-Object System.Drawing.Size(120, 30)
+        $okButton.Text = 'OK'
+        $okButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
+    
+        $buttonLeft = [int](([int]$this.ClientSize.Width - [int]$okButton.Width) / 2) ## center the button
+        $okButton.Location = New-Object System.Drawing.Point($buttonLeft, 15)
+    
+        $this.AcceptButton = $okButton
+        $buttonPanel.Controls.Add($okButton)
+
 
         $panel = New-Object System.Windows.Forms.FlowLayoutPanel
         $panel.Dock = 'Fill'
@@ -62,6 +75,7 @@ class CustomForm : System.Windows.Forms.Form {
         $panel.AutoScroll = $true
         $panel.Padding = New-Object System.Windows.Forms.Padding(10)
 
+        ## add all inputs from argslist
         foreach ($arg in $ArgsList) {
             $field = [LabeledTextBox]::new($arg.Label)
             $field.TextBox.Text = $arg.DefaultValue
@@ -69,18 +83,7 @@ class CustomForm : System.Windows.Forms.Form {
             $panel.Controls.Add($field)
         }
 
-
-        $okButton = New-Object System.Windows.Forms.Button
-        $okButton.Location = New-Object System.Drawing.Point(75,120)
-
-        $okButton.Size = New-Object System.Drawing.Size(200, 23)
-        $okButton.Top = $panel.Bottom + 30 ## Padding between the button and the form
-        $okButton.Left = ($this.Width - $okButton.Width) / 2 ; ## center the button
-        $okButton.Text = 'OK'
-        $okButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
-        $this.AcceptButton = $okButton
-        $this.Controls.Add($okButton)
-
+        $this.Controls.Add($buttonPanel)
         $this.Controls.Add($panel)
     }
 
@@ -154,3 +157,4 @@ function form_usage_example() {
     }
 
 }
+
