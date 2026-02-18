@@ -14,6 +14,16 @@ class Argument {
     }
 }
 
+function Show-ErrorMessage {
+    param([string]$message)
+    [System.Windows.Forms.MessageBox]::Show(
+        $message,
+        'Error',
+        [System.Windows.Forms.MessageBoxButtons]::OK,
+        [System.Windows.Forms.MessageBoxIcon]::Error
+    )
+}
+
 class LabeledTextBox : System.Windows.Forms.Panel {
     [System.Windows.Forms.Label]$Label
     [System.Windows.Forms.TextBox]$TextBox
@@ -74,38 +84,73 @@ class CustomForm : System.Windows.Forms.Form {
         $this.Controls.Add($panel)
     }
 
-    getResult() {
+
+    [System.Windows.Forms.DialogResult]askInput() {
         $result = $this.ShowDialog()
 
-        ## TODO: Maybe formatting the output of the form
-        for ($i = 0; $i -lt $this.ArgsList.Length; $i++) { 
+        ## checking for canceled form
+        if ($result -ne 1) {
+            $error_message = "Error: Form canceled."
+            throw ($error_message)
+        }
 
-            ## check for a blank REQUIRED field
+        ## checking for a blank REQUIRED field
+        for ($i = 0; $i -lt $this.ArgsList.Length; $i++) { 
             if ($this.ArgsList[$i].isRequired -and 
-                $this.Fields[$i].TextBox.Text.length -eq 0) {
-                Write-Host "Error"
-                
+                $this.Fields[$i].TextBox.Text.length -eq 0) {                
                 $error_message = "Error: Field " + $this.ArgsList[$i].Label + " is required."
-                [System.Windows.Forms.MessageBox]::Show(
-                $error_message, 
-                'Erreur', 
-                [System.Windows.Forms.MessageBoxButtons]::OK, 
-                [System.Windows.Forms.MessageBoxIcon]::Error)
-                exit(1)
+                throw ($error_message)
             }
         }
+
+        return $result
+    }
+
+    [string] getFormValue([string]$Label) {
+        for ($i = 0; $i -lt $this.ArgsList.Length; $i++) { 
+            if ($this.ArgsList[$i].Label -eq $Label) {                
+                return ($this.Fields[$i].TextBox.Text)
+            }
+        }
+        throw("Error: "" $Label "" doesn't exists in the arguments")
     }
 }
 
 
 
-$prg_name = "GetGroupsExample"
+## ==================== USAGE ====================
 
-#Argument( Label, isRequired, DefaultValue/PlaceHolder )
-$argsData = @(
-    [Argument]::new("First Name", $true, "Beaufils"),
-    [Argument]::new("Last Name", $true, "Charlie")
-)
+function form_usage_example() {
+    ## import the module
+    ## Import-Module 'this-file.psm1'
 
-$form = [CustomForm]::new($prg_name, $argsData)
-$form.getResult()
+
+    # program name
+    $prg_name = "GetGroupsExample"
+
+
+    #Argument: Label, isRequired, DefaultValue
+    $argsData = @(
+        [Argument]::new("Last Name", $true, "Charlie"), 
+        [Argument]::new("First Name", $true, "Beaufils")
+    )
+
+    try {
+        $form = [CustomForm]::new($prg_name, $argsData)
+    
+        # displays the form
+        $form.askInput()
+
+                                   # get a value by its field's name
+        Write-Host "Last Name: "   $form.getFormValue("Last Name")
+        Write-Host "First Name: "  $form.getFormValue("First Name")
+        Write-Host "Test throw: "  $form.getFormValue("Test_throw")
+
+    }
+    catch {
+        Write-Host "$_" ## stdout
+        Show-ErrorMessage("$_") ## windows gui error message
+        exit(1)
+    }
+
+}
