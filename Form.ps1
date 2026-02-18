@@ -1,5 +1,6 @@
 ﻿Add-Type -AssemblyName System.Windows.Forms
 Add-Type -AssemblyName System.Drawing
+Add-Type -AssemblyName System.Windows.Forms
 
 class Argument {
     [string]$Label
@@ -36,8 +37,10 @@ class LabeledTextBox : System.Windows.Forms.Panel {
 
 class CustomForm : System.Windows.Forms.Form {
     [System.Collections.Generic.List[LabeledTextBox]]$Fields
+    [Argument[]]$ArgsList
 
     CustomForm([string]$prg_name, [Argument[]]$ArgsList) {
+        $this.ArgsList = $ArgsList
         $this.Text = $prg_name
         $this.Size = New-Object System.Drawing.Size(320, 300)
         $this.StartPosition = "CenterScreen"
@@ -59,7 +62,10 @@ class CustomForm : System.Windows.Forms.Form {
 
         $okButton = New-Object System.Windows.Forms.Button
         $okButton.Location = New-Object System.Drawing.Point(75,120)
-        $okButton.Size = New-Object System.Drawing.Size(75,23)
+
+        $okButton.Size = New-Object System.Drawing.Size(200, 23)
+        $okButton.Top = $panel.Bottom + 30 ## Padding between the button and the form
+        $okButton.Left = ($this.Width - $okButton.Width) / 2 ; ## center the button
         $okButton.Text = 'OK'
         $okButton.DialogResult = [System.Windows.Forms.DialogResult]::OK
         $this.AcceptButton = $okButton
@@ -71,11 +77,26 @@ class CustomForm : System.Windows.Forms.Form {
     getResult() {
         $result = $this.ShowDialog()
 
-        ## TODO: For each required, check the length
         ## TODO: Maybe formatting the output of the form
+        for ($i = 0; $i -lt $this.ArgsList.Length; $i++) { 
 
+            ## check for a blank REQUIRED field
+            if ($this.ArgsList[$i].isRequired -and 
+                $this.Fields[$i].TextBox.Text.length -eq 0) {
+                Write-Host "Error"
+                
+                $error_message = "Error: Field " + $this.ArgsList[$i].Label + " is required."
+                [System.Windows.Forms.MessageBox]::Show(
+                $error_message, 
+                'Erreur', 
+                [System.Windows.Forms.MessageBoxButtons]::OK, 
+                [System.Windows.Forms.MessageBoxIcon]::Error)
+                exit(1)
+            }
+        }
     }
 }
+
 
 
 $prg_name = "GetGroupsExample"
