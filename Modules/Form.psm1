@@ -88,7 +88,7 @@ class CustomForm : System.Windows.Forms.Form {
     }
 
 
-    [System.Windows.Forms.DialogResult]askInput() {
+    [void]askInput() {
         $result = $this.ShowDialog()
 
         ## checking for canceled form
@@ -105,8 +105,6 @@ class CustomForm : System.Windows.Forms.Form {
                 throw ($error_message)
             }
         }
-
-        return $result
     }
 
     [string] getFormValue([string]$Label) {
