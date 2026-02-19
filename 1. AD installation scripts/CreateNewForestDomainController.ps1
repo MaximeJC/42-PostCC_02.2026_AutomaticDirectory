@@ -29,7 +29,7 @@ catch {
     Write-Host "$_"
     Show-ErrorMessage("$_")
     exit(1)
-}][
+}
 
 ## Test-ADDSForestInstallation
 Try {
