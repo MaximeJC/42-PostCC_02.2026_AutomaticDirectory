@@ -42,7 +42,7 @@ catch {
 $encrypted = Get-Content "C:\secure\pwd.txt"
 $secureString = ConvertTo-SecureString $encrypted
 
-$credentials = New-Object System.Management.Automation.PSCredential ("Administrator", $secureString)
+$credentials = New-Object System.Management.Automation.PSCredential ("Administrator@domolia.lan", $secureString)
 
 ## Test-ADDSForestInstallation
 Try {
