@@ -33,7 +33,7 @@ catch {
 
 ## Test-ADDSForestInstallation
 Try {
-    $result = Test-ADDSForestInstallation -DomainName $DomainName -ErrorAction Stop
+    $result = Test-ADDSForestInstallation -DomainName $DomainName -DomainNetbiosName $NetbiosName -InstallDns -ErrorAction Stop
 }
 Catch {
     $_ | select-object -ExpandProperty Status
@@ -54,7 +54,7 @@ if ($status -eq "Success") {
     ## Create forest if test OK
     Write-Host "Success - Creation of the forest..." -ForegroundColor Green
 
-    Install-ADDSForest -DomainName $DomainName -DomainNetbiosName $NetbiosName -InstallDns
+    Install-ADDSForest -DomainName $DomainName -DomainNetbiosName $NetbiosName -InstallDns -ErrorAction Stop
 
 } else {
     ## Send error message if test NOK
