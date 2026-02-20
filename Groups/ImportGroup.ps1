@@ -16,6 +16,7 @@ try {
     $origin = $form.getFormValue("Origin group name")
     $dest = $form.getFormValue("Destination group name")
 
+    #        get the source group                               copies all src properties into the dest's           
     Get-ADGroupMember -Identity $origin | ForEach-Object {Add-ADGroupMember -Identity $dest -Members $_.distinguishedName}
 }
 catch {

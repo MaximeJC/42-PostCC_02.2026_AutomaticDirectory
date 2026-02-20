@@ -1,11 +1,12 @@
 using assembly System.Windows.Forms
 using assembly System.Drawing
 using module "..\Modules\Form.psm1"
+using module "..\Modules\Users.psm1"
 
-$prg_name = "ModifyGroup"
+$prg_name = "EditUserAttribute"
 
 $argsData = @(
-    [Argument]::new("Group name", $true, ""),
+    [Argument]::new("Account name", $true, ""),
     [Argument]::new("Attribute to edit", $true, ""),
     [Argument]::new("New attribute value", $true, "")
 )
@@ -16,14 +17,14 @@ try {
 
     ## we can't do a -$atribute, we have to deal with ad-params
     $adParams = @{
-        Identity = $form.getFormValue("Group name")
+        Identity = $form.getFormValue("Account name")
     }
     $attrName  = $form.getFormValue("Attribute to edit")
     $attrValue = $form.getFormValue("New attribute value")
-    CheckGroupProperty($attrName) # validate the asked property
-    $adParams[$attrName] = $attrValue # sets the property
+    CheckUserProperty($attrName) # check the property validity
+    $adParams[$attrName] = $attrValue
 
-    Set-ADGroup @adParams
+    Set-ADUser @adParams
 }
 catch {
     Write-Host "$_"

@@ -17,11 +17,11 @@ try {
     $property = $form.getFormValue("Property name (Optionnal)")
 
     if ($property.length -eq 0) {
-        Get-ADGroup -Identity $group
+        Get-ADGroup -Identity $group # optional
     }
     else {
-        CheckGroupProperty($property)
-        Get-ADGroup -Identity $group | Select-Object -Property $property
+        CheckGroupProperty($property) # check the property
+        Get-ADGroup -Identity $group | Select-Object -Property $property # filter the output
     }
 }
 catch {
