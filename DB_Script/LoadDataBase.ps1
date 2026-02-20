@@ -39,8 +39,9 @@ try {
         }
         catch { 
             Write-Host "An error occured for entry:"
-            Write-Host New-Object PSObject -Property $entry 
-            Write-Host "$_"
+
+            New-Object PSObject -Property $entry 
+            Write-Host "$_`n"
         }
     }
 }   

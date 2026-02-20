@@ -1,0 +1,5 @@
+﻿"Type","Surname","UserPrincipalName","Name","GivenName","SamAccountName","GroupCategory","GroupScope"
+"user","Smith","jsmith@domolia.lan","John JS. Smith","John","jsmith",,
+"user","Beaufils","pbeaufils@domolia.lan","Paul PB. Beaufils","Paul","pbeaufils",,
+"group",,,"test_group",,"test_group","Security","Global"
+"group",,,"office_group",,"office_group","Security","Global"
