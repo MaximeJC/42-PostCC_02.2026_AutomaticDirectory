@@ -3,7 +3,7 @@ using assembly System.Drawing
 using module "..\Modules\Form.psm1"
 using module "..\Modules\Users.psm1"
 
-$prg_name = "SaveDataBase"
+$prg_name = "LoadDataBase"
 
 $argsData = @(
     [Argument]::new("Path to the .CSV file to load", $true, ""),

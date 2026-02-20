@@ -2,7 +2,7 @@ using assembly System.Windows.Forms
 using assembly System.Drawing
 using module "..\Modules\Form.psm1"
 
-$prg_name = "UserCreation"
+$prg_name = "ResetUserPassword"
 
 $argsData = @(
     [Argument]::new("Account name", $true, "")
