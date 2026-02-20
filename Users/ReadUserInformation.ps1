@@ -16,10 +16,9 @@ try {
 
     $accountName = $form.getFormValue("Account name")
     $attrName = $form.getFormValue("Attribute to retrieve")
-    CheckUserProperty($attrName)
+    CheckUserProperty($attrName) #checks the attribute
 
-
-    Get-ADUser -Identity $accountName | Select-Object -Property $attrName
+    Get-ADUser -Identity $accountName | Select-Object -Property $attrName # filter by attribute
 }
 catch {
     Write-Host "$_"

@@ -15,7 +15,7 @@ try {
 
     $userName = $form.getFormValue("User name")
     $groupName = $form.getFormValue("Group name")
-
+                                                            #   avoid the confirmation prompt
     Remove-ADGroupMember -Identity $groupName -Members $userName -Confirm:$false
 }
 catch {

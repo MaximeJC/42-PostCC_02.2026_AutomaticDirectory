@@ -20,7 +20,7 @@ try {
                     ForEach-Object { $_.Trim() } |  ## trim whitespaces 
                     Where-Object { $_ -ne "" }     ## skip null entries
 
-    if ($Properties -eq "") { ## no entries after parsing
+    if ($Properties -eq "") { ## if no entries after parsing
         throw ("No properties were provided. Please specify at least one property.")
         return
     }

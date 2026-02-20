@@ -17,10 +17,12 @@ try {
     $inPath = $form.getFormValue("Path to the .CSV file to load")
     $delimiter = $form.getFormValue("CSV delimiter")
 
+    # get csv entries
     $csv = Import-Csv -Path $inPath -Delimiter $delimiter
     foreach ($line in $csv) {
         $entry = @{}
 
+        # retrieve all non-null (valid) params
         foreach ($prop in $line.PSObject.Properties.Name) {
             if ($null -ne $line.$prop -and $line.$prop -ne "" -and $prop -ne "Type") {
                 $entry[$prop] = $line.$prop

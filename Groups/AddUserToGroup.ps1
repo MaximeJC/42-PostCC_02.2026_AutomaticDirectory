@@ -16,6 +16,7 @@ try {
     $userName = $form.getFormValue("User name")
     $groupName = $form.getFormValue("Group name")
 
+    # adding the user to the group
     Add-ADGroupMember -Identity $groupName -Members $userName
 }
 catch {

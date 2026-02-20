@@ -16,11 +16,13 @@ try {
     $form.askInput()
 
     $name =  $form.getFormValue("Group name")
+
+    # creating the asked distribution group
     New-ADGroup -Name $name `
                 -GroupScope $form.getFormValue("Group scope") `
                 -Description  $form.getFormValue("Description") `
                 -Path  $form.getFormValue("Organisation Unit") `
-                -GroupCategory Distribution
+                -GroupCategory Distribution # important
 }
 catch {
     Write-Host "$_"

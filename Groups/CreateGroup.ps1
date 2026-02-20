@@ -14,6 +14,8 @@ $argsData = @(
 try {
     $form = [CustomForm]::new($prg_name, $argsData)
     $form.askInput()
+
+    # creating the asked group
     New-ADGroup -Name  $form.getFormValue("Group name") `
                 -GroupScope $form.getFormValue("Group scope") `
                 -Description  $form.getFormValue("Description") `
