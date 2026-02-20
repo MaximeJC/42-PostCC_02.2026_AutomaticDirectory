@@ -16,12 +16,12 @@ try {
 
     
 
-    if ($property.length -eq 0) {
+    if ($property.length -eq 0) { # optionnal
         Get-ADGroup -Filter *
     }
     else {
         CheckGroupProperty($property)
-        Get-ADGroup -Filter * | Select-Object -Property $property
+        Get-ADGroup -Filter * | Select-Object -Property $property # can be filtered
     }
 }
 catch {

@@ -16,7 +16,7 @@ try {
     $attrName = $form.getFormValue("Attribute to retrieve")
     CheckUserProperty($attrName)
 
-    Get-ADUser -Filter * | Select-Object -Property $attrName
+    Get-ADUser -Filter * | Select-Object -Property $attrName # filter by attribute
 }
 catch {
     Write-Host "$_"

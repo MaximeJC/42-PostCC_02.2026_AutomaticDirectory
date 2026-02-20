@@ -13,9 +13,9 @@ try {
     $form.askInput()
 
     $groupName = $form.getFormValue("Group name")
-    Get-ADGroupMember -Identity $groupName `
-    | Where-Object -Property objectClass -EQ "user" `
-    | Select-Object -Property name
+    Get-ADGroupMember -Identity $groupName |
+    Where-Object -Property objectClass -EQ "user" | # get only users
+    Select-Object -Property name # filter to display the name
 }
 catch {
     Write-Host "$_"

@@ -21,7 +21,7 @@ try {
     }
     $attrName  = $form.getFormValue("Attribute to edit")
     $attrValue = $form.getFormValue("New attribute value")
-    CheckUserProperty($attrName)
+    CheckUserProperty($attrName) # check the property validity
     $adParams[$attrName] = $attrValue
 
     Set-ADUser @adParams

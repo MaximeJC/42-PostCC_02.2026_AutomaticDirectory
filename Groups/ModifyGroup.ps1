@@ -20,8 +20,8 @@ try {
     }
     $attrName  = $form.getFormValue("Attribute to edit")
     $attrValue = $form.getFormValue("New attribute value")
-    CheckGroupProperty($attrName)
-    $adParams[$attrName] = $attrValue
+    CheckGroupProperty($attrName) # validate the asked property
+    $adParams[$attrName] = $attrValue # sets the property
 
     Set-ADGroup @adParams
 }
