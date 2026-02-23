@@ -42,7 +42,7 @@ catch {
 $encrypted = Get-Content "C:\secure\pwd.txt"
 $secureString = ConvertTo-SecureString $encrypted
 
-$credentials = New-Object System.Management.Automation.PSCredential ("Administrator@domolia.lan", $secureString)
+$credentials = New-Object System.Management.Automation.PSCredential ("administrator@domolia.lan", $secureString)
 
 ## Test-ADDSForestInstallation
 Try {
@@ -67,7 +67,22 @@ if ($status -eq "Success") {
     ## Create forest if test OK
     Write-Host "Success - Joining existing domain..." -ForegroundColor Green
 
-    Install-ADDSDomainController -DomainName $DomainName -Credential $credentials -InstallDns -ReplicationSourceDC OFFICE_SRV.domolia.lan -ErrorAction stop
+    Install-ADDSDomainController `
+        -NoGlobalCatalog:$false `
+        -CreateDnsDelegation:$false `
+        -Credential (Get-Credential) `
+        -CriticalReplicationOnly:$false `
+        -DatabasePath "C:\WINDOWS\NTDS" `
+        -DomainName "domolia.lan" `
+        -InstallDns:$true `
+        -LogPath "C:\WINDOWS\NTDS" `
+        -NoRebootOnCompletion:$false `
+        -SiteName "Default-First-Site-Name" `
+        -SysvolPath "C:\WINDOWS\SYSVOL" `
+        -Force:$true
+        
+
+#    Install-ADDSDomainController -DomainName $DomainName -Credential $credentials -InstallDns -ReplicationSourceDC OFFICE_SRV.domolia.lan -ErrorAction stop
 
 } else {
     ## Send error message if test NOK
