@@ -46,7 +46,7 @@ $credentials = New-Object System.Management.Automation.PSCredential ("administra
 
 ## Test-ADDSForestInstallation
 Try {
-    $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential $credentials -InstallDns -ReplicationSourceDC OFFICE_SRV.domolia.lan -ErrorAction stop
+    $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential $credentials -InstallDns -ReplicationSourceDC OFFICE-SRV.domolia.lan -ErrorAction stop
 }
 Catch {
     $_ | select-object -ExpandProperty Status
@@ -80,10 +80,6 @@ if ($status -eq "Success") {
         -SiteName "Default-First-Site-Name" `
         -SysvolPath "C:\WINDOWS\SYSVOL" `
         -Force:$true
-        
-
-#    Install-ADDSDomainController -DomainName $DomainName -Credential $credentials -InstallDns -ReplicationSourceDC OFFICE_SRV.domolia.lan -ErrorAction stop
-
 } else {
     ## Send error message if test NOK
     Write-Host "Failed: " -ForegroundColor Red -NoNewline
