@@ -48,6 +48,7 @@ Catch {
     Write-Host $_.ScriptStackTrace
 }
 
+## Get result status
 $status = $result | Select-Object -ExpandProperty Status
 
 if ($status -eq "Success") {
