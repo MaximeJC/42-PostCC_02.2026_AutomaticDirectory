@@ -3,7 +3,7 @@ using assembly System.Drawing
 using module "..\Modules\Form.psm1"
 using module "..\Modules\Users.psm1"
 
-$prg_name = "SaveDataBase"
+$prg_name = "LoadDataBase"
 
 $argsData = @(
     [Argument]::new("Path to the .CSV file to load", $true, ""),
@@ -39,8 +39,9 @@ try {
         }
         catch { 
             Write-Host "An error occured for entry:"
-            Write-Host New-Object PSObject -Property $entry 
-            Write-Host "$_"
+
+            New-Object PSObject -Property $entry 
+            Write-Host "$_`n"
         }
     }
 }   
