@@ -14,8 +14,8 @@ Import-Module ADDSDeployment
 
 $prg_name = "CreateNewForest"
 $argsData = @(
-    [Argument]::new("Domain name", $true, "domolia.lan"), 
-    [Argument]::new("Netbios name", $true, "OFFICE")
+    [Argument]::new("Domain name", $true, "domolia.lan"),
+    [Argument]::new("Netbios name", $true, "DOMOLIA")
 )
 
 try {
