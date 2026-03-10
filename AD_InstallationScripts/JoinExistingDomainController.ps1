@@ -46,7 +46,7 @@ $credentials = New-Object System.Management.Automation.PSCredential ("administra
 
 ## Test-ADDSForestInstallation
 Try {
-    $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential $credentials -InstallDns -ReplicationSourceDC OFFICE-SRV.domolia.lan -ErrorAction stop
+    $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential $credentials -InstallDns -ErrorAction stop
 }
 Catch {
     $_ | select-object -ExpandProperty Status
@@ -74,7 +74,7 @@ if ($status -eq "Success") {
         -Credential (Get-Credential) `
         -CriticalReplicationOnly:$false `
         -DatabasePath "C:\WINDOWS\NTDS" `
-        -DomainName "domolia.lan" `
+        -DomainName $DomainName `
         -InstallDns:$true `
         -LogPath "C:\WINDOWS\NTDS" `
         -NoRebootOnCompletion:$false `
