@@ -37,9 +37,9 @@ catch {
 
 # mkdir \secure
 # $secure = Read-Host "Enter password" -AsSecureString
-# $secure | ConvertFrom-SecureString | Out-File "C:\secure\pwd.txt"
+# $secure | ConvertFrom-SecureString | Out-File "C:\secure\ad_pwd.txt"
 
-$encrypted = Get-Content "C:\secure\pwd.txt"
+$encrypted = Get-Content "C:\secure\ad_pwd.txt"
 $secureString = ConvertTo-SecureString $encrypted
 
 ## Test-ADDSForestInstallation
