@@ -42,11 +42,9 @@ catch {
 $encrypted = Get-Content "C:\secure\pwd.txt"
 $secureString = ConvertTo-SecureString $encrypted
 
-$credentials = New-Object System.Management.Automation.PSCredential ("administrator@domolia.lan", $secureString)
-
 ## Test-ADDSForestInstallation
 Try {
-    $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential $credentials -InstallDns -ErrorAction stop
+    $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential (Get-Credential) -InstallDns -ErrorAction stop
 }
 Catch {
     $_ | select-object -ExpandProperty Status
