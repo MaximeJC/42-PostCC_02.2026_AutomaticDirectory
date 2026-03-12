@@ -31,9 +31,6 @@ try {
                             -NewPassword $secureString `
 }
 catch {
-    if ($user) { ## if the user is created but the group is invalid
-        Remove-ADUser -Identity $user -Confirm:$false
-    }
     Write-Host "$_"
     Show-ErrorMessage("$_")
     exit(1);
