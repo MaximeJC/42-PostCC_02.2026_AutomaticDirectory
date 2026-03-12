@@ -30,18 +30,6 @@ catch {
     exit(1)
 }
 
-###########################################################################
-# During the evaluation, depending on the machine,
-# we could have to re-generate the secure string with these commands
-###########################################################################
-
-# mkdir \secure
-# $secure = Read-Host "Enter password" -AsSecureString
-# $secure | ConvertFrom-SecureString | Out-File "C:\secure\ad_pwd.txt"
-
-$encrypted = Get-Content "C:\secure\ad_pwd.txt"
-$secureString = ConvertTo-SecureString $encrypted
-
 ## Test-ADDSForestInstallation
 Try {
     $result = Test-ADDSDomainControllerInstallation -DomainName $DomainName -Credential (Get-Credential) -InstallDns -ErrorAction stop
