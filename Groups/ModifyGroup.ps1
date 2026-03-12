@@ -1,6 +1,7 @@
 using assembly System.Windows.Forms
 using assembly System.Drawing
 using module "..\Modules\Form.psm1"
+using module "..\Modules\Groups.psm1"
 
 $prg_name = "ModifyGroup"
 
