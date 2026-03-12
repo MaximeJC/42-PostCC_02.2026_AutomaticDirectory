@@ -53,20 +53,26 @@ $status = $result | Select-Object -ExpandProperty Status
 if ($status -eq "Success") {
     ## Create forest if test OK
     Write-Host "Success - Joining existing domain..." -ForegroundColor Green
-
-    Install-ADDSDomainController `
-        -NoGlobalCatalog:$false `
-        -CreateDnsDelegation:$false `
-        -Credential (Get-Credential) `
-        -CriticalReplicationOnly:$false `
-        -DatabasePath "C:\WINDOWS\NTDS" `
-        -DomainName $DomainName `
-        -InstallDns:$true `
-        -LogPath "C:\WINDOWS\NTDS" `
-        -NoRebootOnCompletion:$false `
-        -SiteName "Default-First-Site-Name" `
-        -SysvolPath "C:\WINDOWS\SYSVOL" `
-        -Force:$true
+    try {
+        Install-ADDSDomainController `
+            -NoGlobalCatalog:$false `
+            -CreateDnsDelegation:$false `
+            -Credential (Get-Credential) `
+            -CriticalReplicationOnly:$false `
+            -DatabasePath "C:\WINDOWS\NTDS" `
+            -DomainName $DomainName `
+            -InstallDns:$true `
+            -LogPath "C:\WINDOWS\NTDS" `
+            -NoRebootOnCompletion:$false `
+            -SiteName "Default-First-Site-Name" `
+            -SysvolPath "C:\WINDOWS\SYSVOL" `
+            -Force:$true
+    }
+    catch {
+        Write-Host "$_"
+        Show-ErrorMessage("$_")
+        exit(1)
+    }
 } else {
     ## Send error message if test NOK
     Write-Host "Failed: " -ForegroundColor Red -NoNewline

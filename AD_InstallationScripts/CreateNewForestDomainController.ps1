@@ -54,8 +54,14 @@ $status = $result | Select-Object -ExpandProperty Status
 if ($status -eq "Success") {
     ## Create forest if test OK
     Write-Host "Success - Creation of the forest..." -ForegroundColor Green
-
-    Install-ADDSForest -DomainName $DomainName -DomainNetbiosName $NetbiosName -InstallDns -ErrorAction Stop
+    try {
+        Install-ADDSForest -DomainName $DomainName -DomainNetbiosName $NetbiosName -InstallDns -ErrorAction Stop
+    }
+    catch {
+        Write-Host "$_"
+        Show-ErrorMessage("$_")
+        exit(1)
+    }
 
 } else {
     ## Send error message if test NOK
